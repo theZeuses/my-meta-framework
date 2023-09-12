@@ -1,0 +1,1296 @@
+{
+	"info": {
+		"_postman_id": "ff409816-5293-4e74-b914-9b81c3487aff",
+		"name": "my-meta-framework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19755415"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_email_verification_id\", response.verification_code_id)",
+									"pm.environment.set(\"mmf_user_id\", response.user._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test1@test.com\",\n    \"name\": \"test\",\n    \"password\": \"12345678\",\n    \"address\": \"test\",\n    \"phone\": \"01718827347\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\"test\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/register",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Registration of new user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test1@test.com\",\n    \"name\": \"test\",\n    \"password\": \"12345678\",\n    \"address\": \"test\",\n    \"phone\": \"01718827347\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\"test\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/register",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "349"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15d-jK8zJ8Ghali4Na8q8YqWVV2jsz8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:11:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"need_email_verification\": true,\n    \"user\": {\n        \"name\": \"test\",\n        \"email\": \"test1@test.com\",\n        \"phone\": \"01718827347\",\n        \"address\": \"test\",\n        \"profession\": \"test\",\n        \"favorite_colors\": [\n            \"test\"\n        ],\n        \"role\": \"USER\",\n        \"_id\": \"6500b7f2f8cbcf5e51ef1b68\",\n        \"createdAt\": \"2023-09-12T19:11:46.700Z\",\n        \"updatedAt\": \"2023-09-12T19:11:46.700Z\",\n        \"__v\": 0\n    },\n    \"verification_code_id\": \"6500b7f2f8cbcf5e51ef1b6a\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_bearer\", response.auth.bearer.token);",
+									"pm.environment.set(\"mmf_refresh\", response.auth.refresh.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"verification_id\": \"{{mmf_email_verification_id}}\",\n    \"code\": \"293607\"\n}\n\n// Please collect the code from http://0.0.0.0:1080",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/verify-email",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"verify-email"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Verify email of registered user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"verification_id\": \"{{blockstak_email_verification_id}}\",\n    \"code\": \"293607\"\n}\n\n// Please collect the code from http://0.0.0.0:1080",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/verify-email",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"verify-email"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "x-app-fingerprint=s%3AeQ72ToNoNVFkTOtyzTnxn.44VaR4vizLOuBN%2BoYCpnpIIhNsK3cbU0Q1ET2io4lK4; Path=/v1/auth/refresh-token; Expires=Thu, 12 Oct 2023 19:12:52 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "864"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"360-a9xV6ykJ43rNo6lNtt9XWKGYB/4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:12:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth\": {\n        \"bearer\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY4Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2OTQ1NDU5NzIsImV4cCI6MTY5NDU0OTU3Mn0.If7h-e9o4tbbGF48gD5sM-FwG5f_YawoWykhMOiBgFM\",\n            \"expires_at\": 1694549572080\n        },\n        \"refresh\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY4Iiwicm9sZSI6IlVTRVIiLCJzZXNzaW9uIjoiVU1oWmNDWXJXeUdQMjRCSVFzM2FzIiwiZmluZ2VycHJpbnQiOiJlUTcyVG9Ob05WRmtUT3R5elRueG4iLCJpYXQiOjE2OTQ1NDU5NzIsImV4cCI6MTY5NzEzNzk3Mn0.pWrWdQdlFRe__OsQkGSs4KfmzkXTD9UZMhZz1Wrbbv8\",\n            \"expires_at\": 1697137972080\n        }\n    },\n    \"user\": {\n        \"_id\": \"6500b7f2f8cbcf5e51ef1b68\",\n        \"name\": \"test\",\n        \"email\": \"test1@test.com\",\n        \"phone\": \"01718827347\",\n        \"address\": \"test\",\n        \"profession\": \"test\",\n        \"favorite_colors\": [\n            \"test\"\n        ],\n        \"role\": \"USER\",\n        \"createdAt\": \"2023-09-12T19:11:46.700Z\",\n        \"updatedAt\": \"2023-09-12T19:11:46.700Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_refresh}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/logout",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "logout last logged in user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/logout",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "x-app-fingerprint=s%3A.vrIL%2BJ4HlaWhQ%2B8PQPMLdM2if4RW57l5O8Z08Bb9Qcg; Path=/v1/auth/refresh-token; Expires=Tue, 12 Sep 2023 19:13:25 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "16"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:13:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_bearer\", response.auth.bearer.token);",
+									"pm.environment.set(\"mmf_refresh\", response.auth.refresh.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test1@test.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/login",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login (general user)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test1@test.com\",\n    \"password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/login",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "x-app-fingerprint=s%3A2iC_XX_osMsTAW67YDO6A.vsIHDz5JE%2FRlB1hs5CmVM6MGbUYVKincD%2FosFWpmkCc; Path=/v1/auth/refresh-token; Expires=Thu, 12 Oct 2023 19:13:49 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "911"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"38f-7UO3JjgykF7drvY/PhD+MG4dgD4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:13:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth\": {\n        \"bearer\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY4Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2OTQ1NDYwMjksImV4cCI6MTY5NDU0OTYyOX0.1JvSn9LPjbE5Y1zDFP3LqhjtI-G9F6o-Opy1b4uie34\",\n            \"expires_at\": 1694549629303\n        },\n        \"refresh\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY4Iiwicm9sZSI6IlVTRVIiLCJzZXNzaW9uIjoiRThoN2ZsS1hFakNPZ09CWTF0aUMzIiwiZmluZ2VycHJpbnQiOiIyaUNfWFhfb3NNc1RBVzY3WURPNkEiLCJpYXQiOjE2OTQ1NDYwMjksImV4cCI6MTY5NzEzODAyOX0.1tOQNZU9oJNmkmX9Uu7dDK3RB8qBimaEnzuD1Jp2C6g\",\n            \"expires_at\": 1697138029303\n        }\n    },\n    \"user\": {\n        \"_id\": \"6500b7f2f8cbcf5e51ef1b68\",\n        \"name\": \"test\",\n        \"email\": \"test1@test.com\",\n        \"phone\": \"01718827347\",\n        \"address\": \"test\",\n        \"profession\": \"test\",\n        \"favorite_colors\": [\n            \"test\"\n        ],\n        \"role\": \"USER\",\n        \"createdAt\": \"2023-09-12T19:11:46.700Z\",\n        \"updatedAt\": \"2023-09-12T19:12:52.063Z\",\n        \"__v\": 0,\n        \"email_verified_at\": \"2023-09-12T19:12:52.060Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_bearer\", response.auth.bearer.token);",
+									"pm.environment.set(\"mmf_refresh\", response.auth.refresh.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_refresh}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/refresh-token",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Refresh token (general user)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/refresh-token",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "x-app-fingerprint=s%3A4qGYFpcCOKNReyzTcIbbr.9Lrc7JnoDzZZl74g4XZqLtolrL0CPqbqYyounDHJE9c; Path=/v1/auth/refresh-token; Expires=Thu, 12 Oct 2023 19:15:01 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "911"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"38f-xLw8BpdMQOFT3l4xqwgaRaoDf50\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:15:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth\": {\n        \"bearer\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY4Iiwicm9sZSI6IlVTRVIiLCJpYXQiOjE2OTQ1NDYxMDEsImV4cCI6MTY5NDU0OTcwMX0.MPn9543IHbXTGnetk9s16vx0rv_s0B9q1PdnUuvl5J8\",\n            \"expires_at\": 1694549701741\n        },\n        \"refresh\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY4Iiwicm9sZSI6IlVTRVIiLCJzZXNzaW9uIjoicnU1d1lnR2t0V1BwbU5RT1RHaDNVIiwiZmluZ2VycHJpbnQiOiI0cUdZRnBjQ09LTlJleXpUY0liYnIiLCJpYXQiOjE2OTQ1NDYxMDEsImV4cCI6MTY5NzEzODEwMX0.CqV4QsF8RVfUKk7ElM1tbreWWjNlUtlVsEf3Dzj3Aw0\",\n            \"expires_at\": 1697138101741\n        }\n    },\n    \"user\": {\n        \"_id\": \"6500b7f2f8cbcf5e51ef1b68\",\n        \"name\": \"test\",\n        \"email\": \"test1@test.com\",\n        \"phone\": \"01718827347\",\n        \"address\": \"test\",\n        \"profession\": \"test\",\n        \"favorite_colors\": [\n            \"test\"\n        ],\n        \"role\": \"USER\",\n        \"createdAt\": \"2023-09-12T19:11:46.700Z\",\n        \"updatedAt\": \"2023-09-12T19:12:52.063Z\",\n        \"__v\": 0,\n        \"email_verified_at\": \"2023-09-12T19:12:52.060Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_admin_bearer\", response.auth.bearer.token);",
+									"pm.environment.set(\"mmf_admin_refresh\", response.auth.refresh.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@test.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/login",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login (default admin)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@test.com\",\n    \"password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/login",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "x-app-fingerprint=s%3Au1mM_F6aVN1DQS_HOUmFm.WtCNemT77xKGwsKJL8F2SH7Vas%2FR0KqlKkH4ezMyb%2B0; Path=/v1/auth/refresh-token; Expires=Thu, 12 Oct 2023 19:14:06 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "850"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"352-iIWx2wW/vVau5s0qw4SGwrZe15w\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:14:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth\": {\n        \"bearer\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY1Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjk0NTQ2MDQ2LCJleHAiOjE2OTQ1NDk2NDZ9.69YHbAg0ue30qkzZGatVAts8jlXYqRGPjVcSsIftJDs\",\n            \"expires_at\": 1694549646667\n        },\n        \"refresh\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY1Iiwicm9sZSI6IkFETUlOIiwic2Vzc2lvbiI6IldyR2ZRMlNYNDFvdVY0Zl9XVjFfRCIsImZpbmdlcnByaW50IjoidTFtTV9GNmFWTjFEUVNfSE9VbUZtIiwiaWF0IjoxNjk0NTQ2MDQ2LCJleHAiOjE2OTcxMzgwNDZ9._H_IU_YZiiI60dQAWZ3Z4cX-Geyjv9rZwR9GGYcQp9o\",\n            \"expires_at\": 1697138046667\n        }\n    },\n    \"user\": {\n        \"_id\": \"6500b7f2f8cbcf5e51ef1b65\",\n        \"name\": \"admin\",\n        \"email\": \"admin@test.com\",\n        \"favorite_colors\": [],\n        \"role\": \"ADMIN\",\n        \"email_verified_at\": \"2023-09-12T19:11:46.163Z\",\n        \"createdAt\": \"2023-09-12T19:11:46.167Z\",\n        \"updatedAt\": \"2023-09-12T19:11:46.167Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh token (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_admin_bearer\", response.auth.bearer.token);",
+									"pm.environment.set(\"mmf_admin_refresh\", response.auth.refresh.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_admin_refresh}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/auth/refresh-token",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Refresh token (Admin)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/auth/refresh-token",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "x-app-fingerprint=s%3AtznQVztrMR7XJ0CPcuLfi.H94qOm9bzzX71yAdugRF%2BRTtBKNwB4GJ%2BK2boYtFxno; Path=/v1/auth/refresh-token; Expires=Thu, 12 Oct 2023 19:15:36 GMT; HttpOnly; SameSite=Strict"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "850"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"352-toXAKeXjQ3zuKYxW32TKqjLf2M8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:15:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth\": {\n        \"bearer\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY1Iiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjk0NTQ2MTM2LCJleHAiOjE2OTQ1NDk3MzZ9.B4nO5U4dAqNohbZtc02lPyAhPzCqhg60Bm-6USYw9mg\",\n            \"expires_at\": 1694549736296\n        },\n        \"refresh\": {\n            \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjUwMGI3ZjJmOGNiY2Y1ZTUxZWYxYjY1Iiwicm9sZSI6IkFETUlOIiwic2Vzc2lvbiI6IjkyUFZjVHlGMlpJTk9UVkxjVlNkayIsImZpbmdlcnByaW50IjoidHpuUVZ6dHJNUjdYSjBDUGN1TGZpIiwiaWF0IjoxNjk0NTQ2MTM2LCJleHAiOjE2OTcxMzgxMzZ9.jNA-cpV1aAcpGfx2zorAOKJOQcWeJxMi1Pe7Fx9LJrE\",\n            \"expires_at\": 1697138136296\n        }\n    },\n    \"user\": {\n        \"_id\": \"6500b7f2f8cbcf5e51ef1b65\",\n        \"name\": \"admin\",\n        \"email\": \"admin@test.com\",\n        \"favorite_colors\": [],\n        \"role\": \"ADMIN\",\n        \"email_verified_at\": \"2023-09-12T19:11:46.163Z\",\n        \"createdAt\": \"2023-09-12T19:11:46.167Z\",\n        \"updatedAt\": \"2023-09-12T19:11:46.167Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Make user admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_admin_bearer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/users/{{mmf_user_id}}/make-admin",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{mmf_user_id}}",
+								"make-admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Make the preiously registered user admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/users/{{blockstak_user_id}}/make-admin",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"users",
+										"{{blockstak_user_id}}",
+										"make-admin"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "16"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:15:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "Add report",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"pm.environment.set(\"mmf_latest_report_id\", response._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_admin_bearer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"report1@test.com\",\n    \"name\": \"test\",\n    \"address\": \"test\",\n    \"phone\": \"01718827347\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\"test\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/reports",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"reports"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add a report (only admin)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"report1@test.com\",\n    \"name\": \"test\",\n    \"address\": \"test\",\n    \"phone\": \"01718827347\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\"test\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/reports",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"reports"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "247"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f7-5fionxgD4mZRL2lGRfILg9Ca/Fo\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:16:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test\",\n    \"email\": \"report1@test.com\",\n    \"phone\": \"01718827347\",\n    \"address\": \"test\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\n        \"test\"\n    ],\n    \"_id\": \"6500b929f8cbcf5e51ef1b78\",\n    \"createdAt\": \"2023-09-12T19:16:57.012Z\",\n    \"updatedAt\": \"2023-09-12T19:16:57.012Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Get reports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_bearer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/reports?limit=0&skip=0",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"reports"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "0"
+								},
+								{
+									"key": "skip",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get reports (admin/user)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/reports?limit=0&skip=0",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"reports"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "0"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "249"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f9-nOarM+/cJhtiXaPVq28ngQIt/9I\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:17:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"6500b929f8cbcf5e51ef1b78\",\n        \"name\": \"test\",\n        \"email\": \"report1@test.com\",\n        \"phone\": \"01718827347\",\n        \"address\": \"test\",\n        \"profession\": \"test\",\n        \"favorite_colors\": [\n            \"test\"\n        ],\n        \"createdAt\": \"2023-09-12T19:16:57.012Z\",\n        \"updatedAt\": \"2023-09-12T19:16:57.012Z\",\n        \"__v\": 0\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get report by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_bearer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/reports/{{mmf_latest_report_id}}",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"reports",
+								"{{mmf_latest_report_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get the previously created report (admin/user)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/reports/{{blockstak_latest_report_id}}",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"reports",
+										"{{blockstak_latest_report_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "247"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f7-MCACEgYCZqevWQ+Pdo7BdeXx5xY\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:17:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"6500b929f8cbcf5e51ef1b78\",\n    \"name\": \"test\",\n    \"email\": \"report1@test.com\",\n    \"phone\": \"01718827347\",\n    \"address\": \"test\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\n        \"test\"\n    ],\n    \"createdAt\": \"2023-09-12T19:16:57.012Z\",\n    \"updatedAt\": \"2023-09-12T19:16:57.012Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Update report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_admin_bearer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"report 1\",\n    \"address\": \"test\",\n    \"phone\": \"01718827347\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\"test\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/reports/{{mmf_latest_report_id}}",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"reports",
+								"{{mmf_latest_report_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update the previously report (admin only)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"report 1\",\n    \"address\": \"test\",\n    \"phone\": \"01718827347\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\"test\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/reports/{{blockstak_latest_report_id}}",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"reports",
+										"{{blockstak_latest_report_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "251"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fb-UiZVXijwTRc55nY2GEIO3QIDZR8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:19:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"6500b929f8cbcf5e51ef1b78\",\n    \"name\": \"report 1\",\n    \"email\": \"report1@test.com\",\n    \"phone\": \"01718827347\",\n    \"address\": \"test\",\n    \"profession\": \"test\",\n    \"favorite_colors\": [\n        \"test\"\n    ],\n    \"createdAt\": \"2023-09-12T19:16:57.012Z\",\n    \"updatedAt\": \"2023-09-12T19:19:13.058Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{mmf_admin_bearer}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{mmf_endpoint}}/v1/reports/{{mmf_latest_report_id}}",
+							"host": [
+								"{{mmf_endpoint}}"
+							],
+							"path": [
+								"v1",
+								"reports",
+								"{{mmf_latest_report_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete the previously created report (admin only)",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{blockstak_endpoint}}/v1/reports/{{blockstak_latest_report_id}}",
+									"host": [
+										"{{blockstak_endpoint}}"
+									],
+									"path": [
+										"v1",
+										"reports",
+										"{{blockstak_latest_report_id}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fb-UiZVXijwTRc55nY2GEIO3QIDZR8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 12 Sep 2023 19:19:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

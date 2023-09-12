@@ -1,0 +1,23 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "^@src/(.*)$": "<rootDir>/../src/$1",
+    "^@types/(.*)$": "<rootDir>/../src/@types/$1",
+    "^@common/(.*)$": "<rootDir>/../src/common/$1",
+    "^@config/(.*)$": "<rootDir>/../src/config/$1",
+    "^@database/(.*)$": "<rootDir>/../src/database/$1",
+    "^@jobs/(.*)$": "<rootDir>/../src/jobs/$1",
+    "^@modules/(.*)$": "<rootDir>/../src/modules/$1",
+    "^@core/(.*)$": "<rootDir>/../src/core/$1",
+    "^@notifications/(.*)$": "<rootDir>/../src/notifications/$1",
+    "^@scripts/(.*)$": "<rootDir>/../src/scripts/$1",
+    "^@providers/(.*)$": "<rootDir>/../src/providers/$1",
+    "^@web3Modules/(.*)$": "<rootDir>/../src/web3Modules/$1"
+  }
+}

@@ -1,0 +1,22 @@
+services:
+  mmf-shamil-test-db:
+    image: mongo:6-jammy
+    # command: mongod --port 27018
+    container_name: mmf-shamil-test-db
+    restart: always
+    ports:
+      - 27018:27017
+    volumes: 
+      - test-db:/data/db
+
+  mmf-shamil-test-redis-service:
+    container_name: mmf-shamil-test-redis-service
+    image: redis
+    ports:
+      - 6380:6379
+    environment:
+      - REDIS_PASSWORD=password
+      
+volumes:
+  test-db:
+    driver: local

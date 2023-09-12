@@ -1,0 +1,8 @@
+.git
+.gitattributes
+.gitignore
+Dockerfile
+/dist
+/coverage
+/node_modules
+/target

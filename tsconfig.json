@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "declaration": true,
+      "removeComments": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "es2016",
+      "sourceMap": true,
+      "outDir": "./dist",
+      "rootDir": "./",
+      "baseUrl": ".",  
+      "incremental": true,
+      "skipLibCheck": true,
+      "strictNullChecks": true,
+      "noImplicitAny": false,
+      "strictBindCallApply": false,
+      "forceConsistentCasingInFileNames": false,
+      "noFallthroughCasesInSwitch": false,
+      "types": ["node", "./src/@types/global", "jest"],
+      "paths": {
+        "@types/*": ["src/@types/*"],
+        "@common/*": ["src/common/*"],
+        "@core/*": ["src/core/*"],
+        "@config/*": ["src/config/*"],
+        "@database/*": ["src/database/*"],
+        "@jobs/*": ["src/jobs/*"],
+        "@notifications/*": ["src/notifications/*"],
+        "@modules/*": ["src/modules/*"],
+        "@scripts/*": ["src/scripts/*"],
+        "@providers/*": ["src/providers/*"],
+        "@src/*": ["src/*"]
+      },
+    }
+}  
